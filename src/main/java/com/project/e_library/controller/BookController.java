@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class BookController {
-    BookService bookService;
+    private final BookService bookService;
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
@@ -24,25 +24,22 @@ public class BookController {
 
     @GetMapping("/books/advancedsearch")
     public ResponseEntity<List<Book>> searchBooksAdvanced(@RequestParam String keyword,
-                                                  @RequestParam(defaultValue = "0") int page,
-                                                  @RequestParam(defaultValue = "10")int size) {
-        List<Book> books = bookService.advancedSearch(keyword,page,size);
+                                                  @RequestParam(defaultValue = "0") int page) {
+        List<Book> books = bookService.advancedSearch(keyword,page);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
     @GetMapping("/books/search")
     public ResponseEntity<List<Book>> searchBooks(@RequestParam String keyword,
-                                                  @RequestParam(defaultValue = "0") int page,
-                                                  @RequestParam(defaultValue = "10") int size) {
-        List<Book> books = bookService.searchBooks(keyword,page,size);
+                                                  @RequestParam(defaultValue = "0") int page) {
+        List<Book> books = bookService.searchBooks(keyword,page);
         return new ResponseEntity<>(books,HttpStatus.OK);
     }
 
     @PostMapping("/books/filter")
     public ResponseEntity<List<Book>> filterBooks(@RequestBody List<String> genres,
-                                                  @RequestParam(defaultValue = "0")int page,
-                                                  @RequestParam(defaultValue = "10")int size) {
-        List<Book> books = bookService.filterByGenres(genres,page,size);
+                                                  @RequestParam(defaultValue = "0")int page) {
+        List<Book> books = bookService.filterByGenres(genres,page);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 }

@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookService {
-    BookRepo bookRepo;
+    private final BookRepo bookRepo;
+    private static final int PAGE_SIZE = 10;
 
     public BookService(BookRepo bookRepo) {
         this.bookRepo = bookRepo;
@@ -24,21 +25,21 @@ public class BookService {
     }
 
 
-    public List<Book> advancedSearch(@Param("keyword") String keyword, int page, int size) {
-        return bookRepo.advancedSearch(keyword, PageRequest.of(Math.max(page, 0), Math.max(size, 1)));
+    public List<Book> advancedSearch(@Param("keyword") String keyword, int page) {
+        return bookRepo.advancedSearch(keyword, PageRequest.of(Math.max(page, 0), PAGE_SIZE));
     }
 
 
-    public List<Book> searchBooks(@Param("keyword") String keyword, int page, int size) {
-        return bookRepo.searchBook(keyword, PageRequest.of(Math.max(page,0), Math.max(size, 1)));
+    public List<Book> searchBooks(@Param("keyword") String keyword, int page) {
+        return bookRepo.searchBook(keyword, PageRequest.of(Math.max(page,0), PAGE_SIZE));
     }
 
 
-    public List<Book> filterByGenres(List<String> genres, int page, int size) {
+    public List<Book> filterByGenres(List<String> genres, int page) {
         List<String> normalizedGenres = genres.stream()
                 .map(genre -> genre.toLowerCase().trim())
                 .collect(Collectors.toList());
 
-        return bookRepo.filterByGenres(normalizedGenres, PageRequest.of(Math.max(page,0),Math.max(size, 1)));
+        return bookRepo.filterByGenres(normalizedGenres, PageRequest.of(Math.max(page,0),PAGE_SIZE));
     }
 }
