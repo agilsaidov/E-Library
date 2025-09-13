@@ -16,24 +16,23 @@ public interface BookRepo extends JpaRepository<Book, Integer> {
     List<Book> getRandBooks(@Param("count") int count);
 
 
-    @Query(value = "SELECT b.* FROM books b WHERE " +
-            "b.title ILIKE '%' || :keyword || '%' OR " +
-            "b.author ILIKE '%' || :keyword || '%' OR " +
-            "b.description ILIKE '%' || :keyword || '%' " +
+    @Query("SELECT b FROM Book b WHERE " +
+            "LOWER(b.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(b.author) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(b.description) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "ORDER BY " +
-            "CASE " +
-            "WHEN LOWER(b.title) = LOWER(:keyword) THEN 0 " +
-            "WHEN b.title ILIKE '%' || :keyword || '%' THEN 1 " +
+            "CASE WHEN LOWER(b.title) = LOWER(:keyword) THEN 0 " +
+            "WHEN LOWER(b.title) LIKE LOWER(CONCAT('%', :keyword, '%')) THEN 1 " +
             "WHEN LOWER(b.author) = LOWER(:keyword) THEN 2 " +
-            "WHEN b.author ILIKE '%' || :keyword || '%' THEN 3 " +
-            "ELSE 4 " +
-            "END",
-            nativeQuery = true)
-    List<Book> searchBooks(@Param("keyword") String keyword, Pageable pageable);
+            "WHEN LOWER(b.author) LIKE LOWER(CONCAT('%', :keyword, '%')) THEN 3 "+
+            "ELSE 4 END")
+    List<Book> advancedSearch(@Param("keyword") String keyword, Pageable pageable);
 
+    @Query("SELECT b FROM Book b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Book> searchBook(@Param("keyword") String keyword, Pageable pageable);
 
     @Query("SELECT DISTINCT b FROM Book b "+
             "JOIN b.genres g "+
-            "WHERE LOWER(g) IN :genres")
+            "WHERE TRIM(LOWER(g)) IN :genres")
     List<Book> filterByGenres(@Param("genres") List<String> genres, Pageable pageable);
 }

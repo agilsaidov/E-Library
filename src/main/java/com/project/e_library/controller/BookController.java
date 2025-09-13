@@ -22,12 +22,20 @@ public class BookController {
         return new ResponseEntity<>(bookService.getRandomBooks(10),HttpStatus.OK );
     }
 
+    @GetMapping("/books/advancedsearch")
+    public ResponseEntity<List<Book>> searchBooksAdvanced(@RequestParam String keyword,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10")int size) {
+        List<Book> books = bookService.advancedSearch(keyword,page,size);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
     @GetMapping("/books/search")
     public ResponseEntity<List<Book>> searchBooks(@RequestParam String keyword,
                                                   @RequestParam(defaultValue = "0") int page,
-                                                  @RequestParam(defaultValue = "10")int size) {
+                                                  @RequestParam(defaultValue = "10") int size) {
         List<Book> books = bookService.searchBooks(keyword,page,size);
-        return new ResponseEntity<>(books, HttpStatus.OK);
+        return new ResponseEntity<>(books,HttpStatus.OK);
     }
 
     @PostMapping("/books/filter")
