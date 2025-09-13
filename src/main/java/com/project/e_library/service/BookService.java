@@ -23,4 +23,8 @@ public class BookService {
     public List<Book> searchBooks(String keyword, int page, int size) {
         return bookRepo.searchBooks(keyword, PageRequest.of(Math.max(page, 0), Math.max(size, 1)));
     }
+
+    public List<Book> filterByGenres(List<String> genres,int page, int size) {
+        return bookRepo.filterByGenres(genres, PageRequest.of(Math.max(page,0),Math.max(size, 1)));
+    }
 }

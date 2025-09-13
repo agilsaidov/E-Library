@@ -30,4 +30,10 @@ public interface BookRepo extends JpaRepository<Book, Integer> {
             "END",
             nativeQuery = true)
     List<Book> searchBooks(@Param("keyword") String keyword, Pageable pageable);
+
+
+    @Query("SELECT DISTINCT b FROM Book b "+
+            "JOIN b.genres g "+
+            "WHERE LOWER(g) IN :genres")
+    List<Book> filterByGenres(@Param("genres") List<String> genres, Pageable pageable);
 }
