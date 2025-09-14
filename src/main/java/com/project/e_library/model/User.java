@@ -22,7 +22,7 @@ public class User {
     private Long id;
 
     @Column(name = "user_id")
-    private String auth0_id;
+    private String authId;
 
     @Column(name = "email")
     private String email;
