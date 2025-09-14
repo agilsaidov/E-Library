@@ -3,10 +3,7 @@ package com.project.e_library.controller;
 import com.project.e_library.model.Book;
 import com.project.e_library.repo.InventoryRepo;
 import com.project.e_library.service.InventoryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +18,10 @@ public class InventoryController {
     @GetMapping("/inventory")
     public List<Book> getBooksByUserId(@RequestParam("id") Long userId) {
         return inventoryService.getBooksByUserId(userId);
+    }
+
+    @DeleteMapping("/inventory/remove")
+    public void removeBookById(@RequestParam("id") Long userId, @RequestParam("bookId") Long bookId) {
+        inventoryService.removeBookById(userId, bookId);
     }
 }

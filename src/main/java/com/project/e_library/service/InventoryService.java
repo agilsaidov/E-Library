@@ -18,4 +18,8 @@ public class InventoryService {
     public List<Book> getBooksByUserId(@RequestParam("id") Long user_id) {
         return inventoryRepo.getBooksByUserId(user_id);
     }
+
+    public void removeBookById(Long userId, Long bookId) {
+        inventoryRepo.removeBoookById(userId, bookId);
+    }
 }
