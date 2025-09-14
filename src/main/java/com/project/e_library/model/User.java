@@ -19,9 +19,9 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
-    @Column(name = "user_id")
+    @Column(name = "auth_id")
     private String authId;
 
     @Column(name = "email")
@@ -37,14 +37,12 @@ public class User {
     private Date birthday;
 
     @Column(name = "gender")
-    @Enumerated(EnumType.STRING)
     private String gender;
 
     @Column(name = "picture_url")
     private String pictureUrl;
 
     @Column(name = "role")
-    @Enumerated(EnumType.STRING)
     private String role;
 
     @CreationTimestamp

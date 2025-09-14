@@ -20,8 +20,8 @@ public class Book {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "book_id")
+    private Integer bookId;
 
     @Column(name = "title")
     private String title;
@@ -57,12 +57,12 @@ public class Book {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return id == book.id && Objects.equals(title, book.title) && Objects.equals(author, book.author);
+        return bookId == book.bookId && Objects.equals(title, book.title) && Objects.equals(author, book.author);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author);
+        return Objects.hash(bookId, title, author);
     }
 
     @Override
