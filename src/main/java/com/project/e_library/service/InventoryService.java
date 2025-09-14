@@ -1,0 +1,21 @@
+package com.project.e_library.service;
+
+import com.project.e_library.model.Book;
+import com.project.e_library.repo.InventoryRepo;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+@Service
+public class InventoryService {
+    private final InventoryRepo inventoryRepo;
+
+    public InventoryService(InventoryRepo inventoryRepo) {
+        this.inventoryRepo = inventoryRepo;
+    }
+
+    public List<Book> getBooksByUserId(@RequestParam("id") Long user_id) {
+        return inventoryRepo.getBooksByUserId(user_id);
+    }
+}

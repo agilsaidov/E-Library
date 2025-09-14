@@ -11,12 +11,10 @@ import lombok.NoArgsConstructor;
 public class Inventory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "user_id")
-    private String authId;
+    private Long userId;
 
     @Column(name = "book_id")
     private Integer bookId;
+
 }
