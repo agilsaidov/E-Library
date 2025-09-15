@@ -2,6 +2,7 @@ package com.project.e_library.controller;
 
 import com.project.e_library.model.User;
 import com.project.e_library.service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,8 +14,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
-    public User getUser(@RequestParam("id") long user_id) {
-        return userService.getUserById(user_id);
+    @GetMapping("/user/profile")
+    public User getCurrentUser(Authentication authentication) {
+        String authId = authentication.getName();
+        return userService.getUserByAuthId(authId);
     }
 }

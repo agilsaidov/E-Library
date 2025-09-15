@@ -68,15 +68,15 @@ public class SecurityConfig {
     }
 
 
+    @Value("${cors.allowed.origins}")
+    private String allowedOrigins;
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.setAllowedOriginPatterns(Arrays.asList(
-                "http://localhost:3000",
-                "https://auth0.com" // will be handled
-        ));
+        List<String> origins = Arrays.asList(allowedOrigins.split(","));
+        corsConfiguration.setAllowedOriginPatterns(origins);
 
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
@@ -113,7 +113,7 @@ public class SecurityConfig {
                 }
             }
 
-            List<String> roles = jwt.getClaimAsStringList("htps://mydomain.com/roles"); // Url will be added
+            List<String> roles = jwt.getClaimAsStringList("htps://library-auth.com/roles"); // Url will be added
 
             if(roles != null){
                 for(String s : roles){

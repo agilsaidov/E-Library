@@ -13,7 +13,7 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public User getUserById(@RequestParam("id") long user_id) {
-        return userRepo.findById(user_id);
+    public User getUserByAuthId(String authId) {
+        return userRepo.findByAuthId(authId);
     }
 }
