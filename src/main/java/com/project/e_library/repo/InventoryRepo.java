@@ -13,12 +13,15 @@ import java.util.List;
 @Repository
 public interface InventoryRepo extends JpaRepository<Inventory, Long> {
 
-    @Query("SELECT b FROM Inventory i JOIN Book b ON i.bookId = b.bookId WHERE i.userId = :userId")
-    List<Book> getBooksByUserId(Long userId);
+    @Query("SELECT b FROM Inventory i JOIN Book b ON i.bookId = b.bookId " +
+            "JOIN User u ON i.userId = u.userId WHERE u.authId = :authId")
+    List<Book> getBooksByAuthId(String authId);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Inventory i WHERE i.userId = :userId AND i.bookId = :bookId")
-    void removeBoookById(Long userId, Long bookId);
+    @Query("DELETE FROM Inventory i WHERE i.userId = " +
+            "(SELECT u.userId FROM User u WHERE u.authId = :authId) " +
+            "AND i.bookId = :bookId")
+    void removeBookByAuthId(String authId, Long bookId);
 
 }

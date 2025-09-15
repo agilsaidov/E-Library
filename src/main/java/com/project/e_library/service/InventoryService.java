@@ -15,11 +15,11 @@ public class InventoryService {
         this.inventoryRepo = inventoryRepo;
     }
 
-    public List<Book> getBooksByUserId(@RequestParam("id") Long user_id) {
-        return inventoryRepo.getBooksByUserId(user_id);
+    public List<Book> getBooksByAuthId(String authId) {
+        return inventoryRepo.getBooksByAuthId(authId);
     }
 
-    public void removeBookById(Long userId, Long bookId) {
-        inventoryRepo.removeBoookById(userId, bookId);
+    public void removeBookByAuthId(String authId, Long bookId) {
+        inventoryRepo.removeBookByAuthId(authId, bookId);
     }
 }
