@@ -22,6 +22,14 @@ public interface InventoryRepo extends JpaRepository<Inventory, Long> {
     @Query("DELETE FROM Inventory i WHERE i.userId = " +
             "(SELECT u.userId FROM User u WHERE u.authId = :authId) " +
             "AND i.bookId = :bookId")
-    void removeBookByAuthId(String authId, Long bookId);
+    void removeBookByAuthId(String authId, Integer bookId);
+
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO inventory(user_id, book_id) " +
+            "SELECT u.user_id, :bookId FROM users u WHERE u.authId = :authId",
+          nativeQuery = true )
+    void addBookToInventory(String authId, Integer bookId);
 
 }

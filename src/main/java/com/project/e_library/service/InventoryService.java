@@ -19,7 +19,11 @@ public class InventoryService {
         return inventoryRepo.getBooksByAuthId(authId);
     }
 
-    public void removeBookByAuthId(String authId, Long bookId) {
+    public void addBookToInventory(String authId, Integer bookId) {
+        inventoryRepo.addBookToInventory(authId, bookId);
+    }
+
+    public void removeBookByAuthId(String authId, Integer bookId) {
         inventoryRepo.removeBookByAuthId(authId, bookId);
     }
 }

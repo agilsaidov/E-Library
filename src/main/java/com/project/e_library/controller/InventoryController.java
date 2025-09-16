@@ -21,9 +21,16 @@ public class InventoryController {
         return inventoryService.getBooksByAuthId(authId);
     }
 
+    @PostMapping("/inventory/add")
+    public void addBook(@RequestParam("bookId") Integer bookId,
+                                        Authentication authentication) {
+        String authId = authentication.getName();
+        inventoryService.addBookToInventory(authId,bookId);
+    }
+
     @DeleteMapping("/inventory/remove")
-    public void removeBookById(@RequestParam("bookId") Long bookId,
-                               Authentication authentication) {
+    public void removeBookById(@RequestParam("bookId") Integer bookId,
+                                            Authentication authentication) {
         String authId = authentication.getName();
         inventoryService.removeBookByAuthId(authId, bookId);
     }
