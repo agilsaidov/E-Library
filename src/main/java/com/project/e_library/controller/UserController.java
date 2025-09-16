@@ -2,6 +2,8 @@ package com.project.e_library.controller;
 
 import com.project.e_library.model.User;
 import com.project.e_library.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +17,8 @@ public class UserController {
     }
 
     @GetMapping("/user/profile")
-    public User getCurrentUser(Authentication authentication) {
+    public ResponseEntity<User> getCurrentUser(Authentication authentication) {
         String authId = authentication.getName();
-        return userService.getUserByAuthId(authId);
+        return new ResponseEntity<>(userService.getUserByAuthId(authId), HttpStatus.OK);
     }
 }

@@ -2,6 +2,8 @@ package com.project.e_library.controller;
 
 import com.project.e_library.model.Book;
 import com.project.e_library.service.InventoryService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +18,13 @@ public class InventoryController {
     }
 
     @GetMapping("/inventory")
-    public List<Book> getUserBooks(Authentication authentication) {
+    public ResponseEntity<List<Book>> getUserBooks(Authentication authentication) {
         String authId = authentication.getName();
-        return inventoryService.getBooksByAuthId(authId);
+        return new ResponseEntity<>(inventoryService.getBooksByAuthId(authId),HttpStatus.OK);
     }
 
     @PostMapping("/inventory/add")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addBook(@RequestParam("bookId") Integer bookId,
                                         Authentication authentication) {
         String authId = authentication.getName();
@@ -29,6 +32,7 @@ public class InventoryController {
     }
 
     @DeleteMapping("/inventory/remove")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeBookById(@RequestParam("bookId") Integer bookId,
                                             Authentication authentication) {
         String authId = authentication.getName();
