@@ -28,7 +28,7 @@ public interface InventoryRepo extends JpaRepository<Inventory, Long> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO inventory(user_id, book_id) " +
-            "SELECT u.user_id, :bookId FROM users u WHERE u.authId = :authId",
+            "SELECT u.user_id, :bookId FROM users u WHERE u.auth_id = :authId",
           nativeQuery = true )
     void addBookToInventory(String authId, Integer bookId);
 

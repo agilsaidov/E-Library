@@ -27,6 +27,9 @@ public class InventoryController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addBook(@RequestParam("bookId") Integer bookId,
                                         Authentication authentication) {
+        if (bookId == null) {
+            throw new IllegalArgumentException("Book ID is required");
+        }
         String authId = authentication.getName();
         inventoryService.addBookToInventory(authId,bookId);
     }
