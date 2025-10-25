@@ -12,7 +12,7 @@ public class Inventory {
 
     @Id
     @Column(name = "user_id")
-    private Long userId;
+    private String userId;
 
     @Column(name = "book_id")
     private Integer bookId;

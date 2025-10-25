@@ -2,11 +2,12 @@ package com.project.e_library.repo;
 
 import com.project.e_library.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Long> {
-    @Query("SELECT u FROM User u WHERE u.authId = :authId")
-    User findByAuthId(String authId);
+
+    boolean existsByUserId(String userId);
+
+    boolean existsByEmail(String authId);
 }

@@ -14,18 +14,18 @@ import java.util.Date;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
+@Setter @Getter
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
 
-    @Column(name = "auth_id")
-    private String authId;
+    @Id
+    @Column(name = "user_id")
+    private String userId;
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "name")
     private String name;
@@ -41,9 +41,6 @@ public class User {
 
     @Column(name = "picture_url")
     private String pictureUrl;
-
-    @Column(name = "role")
-    private String role;
 
     @CreationTimestamp
     @Column(name = "created_at")

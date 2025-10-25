@@ -17,15 +17,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/profile")
+/*    @GetMapping("/user/profile")
     public ResponseEntity<User> getCurrentUser(Authentication authentication) {
         String authId = authentication.getName();
-        User user = userService.getUserByAuthId(authId);
+        User user = userService.getUserByUserId(authId);
 
         if (user == null) {
             throw new UserNotFoundException("User not found with Auth ID: " + authId);
         }
 
         return new ResponseEntity<>(user, HttpStatus.OK);
-    }
+    }*/
 }
