@@ -1,31 +1,25 @@
 package com.project.e_library.controller;
 
 import com.project.e_library.exception.UserNotFoundException;
-import com.project.e_library.model.User;
-import com.project.e_library.service.UserService;
+import com.project.e_library.model.LibUser;
+import com.project.e_library.service.LibUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserController {
-    private UserService userService;
+    private LibUserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    @GetMapping("/user")
+    public LibUser getUserDetailsAfterLogin(Authentication authentication) {
+        Optional<LibUser> user = userService.findUserByEmail(authentication.getName());
+        return user.orElseThrow(() -> new UserNotFoundException(authentication.getName()));
     }
-
-/*    @GetMapping("/user/profile")
-    public ResponseEntity<User> getCurrentUser(Authentication authentication) {
-        String authId = authentication.getName();
-        User user = userService.getUserByUserId(authId);
-
-        if (user == null) {
-            throw new UserNotFoundException("User not found with Auth ID: " + authId);
-        }
-
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }*/
 }

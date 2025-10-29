@@ -2,24 +2,27 @@ package com.project.e_library.service;
 
 import com.project.e_library.Id.IdGenerator;
 import com.project.e_library.exception.DuplicateResourceException;
-import com.project.e_library.model.User;
-import com.project.e_library.repo.UserRepo;
+import com.project.e_library.exception.UserNotFoundException;
+import com.project.e_library.model.LibUser;
+import com.project.e_library.repo.LibUserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class LibUserService {
 
-    private final UserRepo userRepo;
+    private final LibUserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public User registerUser(User user) {
+    public LibUser registerUser(LibUser user) {
         if(user == null || user.getEmail() == null || user.getPassword() == null) {
             throw new IllegalArgumentException("Username and password cannot be null");
         }
@@ -35,10 +38,22 @@ public class UserService {
         return user;
     }
 
+    public Optional<LibUser> findUserByEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
 
+    public LibUser loginUser(String email, String password) {
+        System.out.println("Email: "+email + "\nPassword: "+password);
 
+        LibUser user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("Invalid Credentials"));
 
+        if(passwordEncoder.matches(password, user.getPassword())) {
+            return user;
+        }
 
+        throw new UserNotFoundException("Invalid credentials");
+    }
 
 
     //Helper Method

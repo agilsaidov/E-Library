@@ -1,8 +1,8 @@
 package com.project.e_library.controller;
 
 import com.project.e_library.dto.UserRegistrationRequestDto;
-import com.project.e_library.model.User;
-import com.project.e_library.service.UserService;
+import com.project.e_library.model.LibUser;
+import com.project.e_library.service.LibUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RegistrationController {
 
-    private final UserService userService;
+    private final LibUserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserRegistrationRequestDto userRegistrationRequestDto) {
-        User registrationUser = new User();
+        LibUser registrationUser = new LibUser();
         registrationUser.setEmail(userRegistrationRequestDto.getEmail());
         registrationUser.setPassword(userRegistrationRequestDto.getPassword());
         userService.registerUser(registrationUser);

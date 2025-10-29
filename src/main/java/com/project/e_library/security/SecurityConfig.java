@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -18,6 +19,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -26,19 +28,15 @@ public class SecurityConfig {
                 .sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests( request ->
                         request.anyRequest().permitAll())
-                .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
+                .cors(cors -> cors.configurationSource(request -> {
 
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                        CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(Collections.singletonList("*"));
-                        config.setAllowedHeaders(Collections.singletonList("*"));
-                        config.setAllowedMethods(Collections.singletonList("*"));
-                        config.setAllowCredentials(true);
-                        config.setMaxAge(3600L);
-                        return config;
-                    }
-
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(Collections.singletonList("*"));
+                    config.setAllowedHeaders(Collections.singletonList("*"));
+                    config.setAllowedMethods(Collections.singletonList("*"));
+                    config.setAllowCredentials(true);
+                    config.setMaxAge(3600L);
+                    return config;
                 }));
 
         http.formLogin(withDefaults());

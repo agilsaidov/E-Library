@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
-public class UserBasicResponseDto {
+public class UserRegistrationResponseDto {
     private String userId;
     private String userName;
     private Date createdAt;
