@@ -43,7 +43,6 @@ public class LibUserService {
     }
 
     public LibUser loginUser(String email, String password) {
-        System.out.println("Email: "+email + "\nPassword: "+password);
 
         LibUser user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Invalid Credentials"));

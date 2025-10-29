@@ -1,6 +1,8 @@
-package com.project.e_library.service;
+package com.project.e_library.security;
 
 import com.project.e_library.model.LibUser;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,7 @@ public class JwtService {
         return Jwts.builder()
                 .claims()
                 .add(claims)
+                .subject(user.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + (60 * 60 * 1000)))
                 .and()
@@ -36,6 +39,34 @@ public class JwtService {
                 .compact();
 
     }
+
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser()
+                    .verifyWith(getSecretKey())
+                    .build()
+                    .parseSignedClaims(token);
+
+            return true;
+
+        }catch (JwtException | IllegalArgumentException e){
+            return false;
+        }
+    }
+
+    public String getEmailFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token).
+                getPayload();
+
+        return claims.getSubject();
+    }
+
+
+    //Helper Method
     private SecretKey getSecretKey() {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
