@@ -1,7 +1,9 @@
 package com.project.e_library.controller;
 
 import com.project.e_library.dto.LoginRequestDto;
+import com.project.e_library.dto.LoginResponseDto;
 import com.project.e_library.model.LibUser;
+import com.project.e_library.service.JwtService;
 import com.project.e_library.service.LibUserDetailsService;
 import com.project.e_library.service.LibUserService;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +19,21 @@ public class LoginController {
 
     private final LibUserDetailsService userDetailsService;
     private final LibUserService userService;
+    private final JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity<LibUser> login(@RequestBody LoginRequestDto loginRequestDto) {
-        return new ResponseEntity<>(userService.loginUser(loginRequestDto.getEmail(), loginRequestDto.getPassword()),HttpStatus.OK);
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+        LibUser user = userService.loginUser(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+        String token = jwtService.generateToken(user);
+        return new ResponseEntity<>(
+                new LoginResponseDto(token,user.getUserId(),
+                        user.getEmail(),
+                        user.getName(),
+                        user.getSurname(),
+                        user.getBirthday(),
+                        user.getGender(),
+                        user.getPictureUrl()),
+                HttpStatus.OK);
     }
-
 
 }
