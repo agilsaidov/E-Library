@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests( request ->
                         request.requestMatchers("/api/login","/api/register","/api/logout",
                                                 "/api/books","/api/books/search").permitAll().
-                        requestMatchers("**").authenticated()
+                        requestMatchers("/**").authenticated()
                 )
                 .addFilterBefore( jwtTokenValidatorFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(request -> {

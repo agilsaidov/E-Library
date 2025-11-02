@@ -1,4 +1,4 @@
-package com.project.e_library.dto;
+package com.project.e_library.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

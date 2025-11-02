@@ -1,5 +1,6 @@
-package com.project.e_library.dto;
+package com.project.e_library.dto.response;
 
+import com.project.e_library.model.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,6 +15,6 @@ public class LoginResponseDto {
     private String name;
     private String surname;
     private Date birthday;
-    private String gender;
+    private Gender gender;
     private String avatarUrl;
 }

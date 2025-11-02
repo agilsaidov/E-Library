@@ -1,4 +1,4 @@
-package com.project.e_library.dto;
+package com.project.e_library.dto.response;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ErrorResponse {
-    private String errorCode;
+    private int status;
+    private String error;
     private String message;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

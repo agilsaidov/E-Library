@@ -65,6 +65,13 @@ public class JwtService {
         return claims.getSubject();
     }
 
+    public String getIdFromToken(String token) {
+        String id = Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build().parseSignedClaims(token).getPayload().get("userId", String.class);
+        return id;
+    }
+
 
     //Helper Method
     private SecretKey getSecretKey() {

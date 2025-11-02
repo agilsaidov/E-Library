@@ -26,13 +26,11 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
-        System.out.println(request.getHeader("Authorization"));
 
         String token = extractToken(request);
 
         if(token != null && jwtService.validateToken(token)) {
             String email = jwtService.getEmailFromToken(token);
-            System.out.println(email);
 
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
@@ -42,7 +40,6 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
                     .buildDetails(request));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.out.println(SecurityContextHolder.getContext().getAuthentication());
         }
 
         filterChain.doFilter(request, response);

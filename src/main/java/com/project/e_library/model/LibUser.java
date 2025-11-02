@@ -39,7 +39,8 @@ public class LibUser {
     private Date birthday;
 
     @Column(name = "gender")
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(name = "picture_url")
     private String pictureUrl;
