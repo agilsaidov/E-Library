@@ -1,6 +1,5 @@
 package com.project.e_library.security;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Collections;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
@@ -35,7 +32,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests( request ->
                         request.requestMatchers("/api/login","/api/register","/api/logout",
                                                 "/api/books","/api/books/search").permitAll().
-                        requestMatchers("/**").authenticated()
+                                requestMatchers("/api/user/change-password","/api/user/update").authenticated().
+                                requestMatchers("/**").authenticated()
                 )
                 .addFilterBefore( jwtTokenValidatorFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(request -> {

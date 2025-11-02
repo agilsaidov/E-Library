@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,6 +58,7 @@ public class GlobalExceptionHandler {
     }
 
 
+
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ErrorResponse> handleMissingParameter(MissingServletRequestParameterException ex) {
         ErrorResponse error = new ErrorResponse(
@@ -82,6 +82,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+
     @ExceptionHandler(DuplicateResourceException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateResourceException(DuplicateResourceException ex) {
         ErrorResponse error = new ErrorResponse(
@@ -92,6 +93,7 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<FieldErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
@@ -104,6 +106,42 @@ public class GlobalExceptionHandler {
         });
 
         FieldErrorResponse error = new FieldErrorResponse(HttpStatus.BAD_REQUEST, errors);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(InvalidCredentialException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidCredentialException(InvalidCredentialException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.UNAUTHORIZED.value(),
+                "INVALID_CREDENTIALS",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(MismatchedPasswordException.class)
+    public ResponseEntity<ErrorResponse> handleMismatchedPasswordException(MismatchedPasswordException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "MISMATCHED_PASSWORDS",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(SamePasswordException.class)
+    public ResponseEntity<ErrorResponse> handleSamePasswordException(SamePasswordException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "SAME_PASSWORD_EXCEPTION",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
