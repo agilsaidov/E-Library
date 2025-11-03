@@ -10,28 +10,27 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//Methods are not ready yet...(Will be updated)
 
 @Repository
 public interface InventoryRepo extends JpaRepository<Inventory, Long> {
 
     @Query("SELECT b FROM Inventory i JOIN Book b ON i.bookId = b.bookId " +
             "JOIN LibUser u ON i.userId = u.userId WHERE u.userId = :userId")
-    List<Book> getBooksByAuthId(String authId);
+    List<Book> getBooksByUserId(String userId);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM Inventory i WHERE i.userId = " +
             "(SELECT u.userId FROM LibUser u WHERE u.userId = :userId) " +
             "AND i.bookId = :bookId")
-    void removeBookByAuthId(String userId, Integer bookId);
+    void removeBookByUserId(String userId, Integer bookId);
 
 
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO inventory(user_id, book_id) " +
-            "SELECT u.user_id, :bookId FROM users u WHERE u.auth_id = :authId",
+            "SELECT u.user_id, :bookId FROM users u WHERE u.user_id = :userId",
           nativeQuery = true )
-    void addBookToInventory(String authId, Integer bookId);
+    void addBookToInventory(String userId, Integer bookId);
 
 }

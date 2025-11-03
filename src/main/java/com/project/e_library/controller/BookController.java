@@ -2,6 +2,7 @@ package com.project.e_library.controller;
 
 import com.project.e_library.model.Book;
 import com.project.e_library.service.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,12 +19,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @Validated
+@RequiredArgsConstructor
 public class BookController {
-    private final BookService bookService;
 
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
+    private final BookService bookService;
 
     @GetMapping("/books")
     public ResponseEntity<List<Book>> getBooks() {
