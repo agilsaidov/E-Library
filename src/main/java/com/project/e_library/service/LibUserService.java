@@ -6,7 +6,6 @@ import com.project.e_library.dto.request.UserUpdateRequestDto;
 import com.project.e_library.exception.*;
 import com.project.e_library.model.LibUser;
 import com.project.e_library.repo.LibUserRepo;
-import com.project.e_library.security.JwtService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,24 +20,6 @@ public class LibUserService {
 
     private final LibUserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
-
-    @Transactional
-    public LibUser registerUser(LibUser user) {
-        if(user == null || user.getEmail() == null || user.getPassword() == null) {
-            throw new IllegalArgumentException("Username and password cannot be null");
-        }
-
-        if(userRepo.existsByEmail(user.getEmail())) {
-            throw new DuplicateResourceException("The given email is already in use");
-        }
-
-        String userId = generateUniqueUserId(IdGenerator.generateUserId());
-        user.setUserId(userId);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepo.save(user);
-        return user;
-    }
 
 
     public Optional<LibUser> findUserByEmail(String email) {

@@ -11,7 +11,7 @@ public interface LibUserRepo extends JpaRepository<LibUser, String> {
 
     boolean existsByUserId(String userId);
 
-    boolean existsByEmail(String authId);
+    boolean existsByEmail(String email);
 
     Optional<LibUser> findByEmail(String email);
 

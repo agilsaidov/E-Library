@@ -5,6 +5,7 @@ import com.project.e_library.dto.response.FieldErrorResponse;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -144,4 +145,52 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(RegistrationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleRegistrationNotFoundException(RegistrationNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "REGISTRATION_NOT_FOUND",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(MailException.class)
+    public ResponseEntity<ErrorResponse> handleMailException(MailException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "EMAIL_NOT_SEND",
+                "An error occurred while sending the email",
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    @ExceptionHandler(InvalidPayloadException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPayloadException(InvalidPayloadException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "INVALID_PAYLOAD",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(InvalidOtpException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidOtpException(InvalidOtpException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "INVALID_OTP",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
 }
