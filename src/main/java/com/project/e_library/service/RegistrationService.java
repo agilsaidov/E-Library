@@ -13,6 +13,7 @@ import com.project.e_library.repo.LibUserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class RegistrationService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     private static final String REGISTRATION_PREFIX = "registration:";
+    private static final int REGISTRATION_EXPIRATION = 5;
 
     public void initiateRegistration(RegistrationInitiateRequest riRequest) {
         if(riRequest == null || riRequest.getEmail() == null || riRequest.getPassword() == null) {
@@ -48,7 +50,7 @@ public class RegistrationService {
 
         redisTemplate.opsForValue().set(REGISTRATION_PREFIX + riRequest.getEmail(),
                 tempRegistrationData,
-                3,
+                REGISTRATION_EXPIRATION,
                 TimeUnit.MINUTES
         );
 
