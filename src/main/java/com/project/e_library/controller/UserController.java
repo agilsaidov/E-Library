@@ -30,7 +30,6 @@ public class UserController {
     @PutMapping("/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto,
                                             @RequestHeader("Authorization") String authHeader) {
-        System.out.println("asasasa");
 
         String userId = jwtService.getIdFromToken(authHeader.substring(7));
 

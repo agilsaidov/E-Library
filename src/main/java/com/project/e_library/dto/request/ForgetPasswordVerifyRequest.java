@@ -7,11 +7,14 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class RegistrationInitiateRequest {
+public class ForgetPasswordVerifyRequest {
 
     @NotBlank(message = "Email is required")
     @Email(message = "Email must be valid")
     private String email;
+
+    @NotBlank(message = "OTP code is required")
+    private String otpCode;
 
     @NotBlank(message = "Password is required")
     @Size(min = 8,max = 50, message = "Password must be between 8 and 50 characters")
@@ -19,5 +22,5 @@ public class RegistrationInitiateRequest {
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",
             message = "Password must contain at least one uppercase letter, one lowercase letter, and one digit"
     )
-    private String password;
+    private String newPassword;
 }

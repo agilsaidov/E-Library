@@ -11,7 +11,6 @@ import java.security.SecureRandom;
 public class OtpService {
 
     private final SecureRandom random = new SecureRandom();
-    private final PasswordEncoder encoder;
 
     public String generateOtp() {
         int otp = random.nextInt(900000) + 100000;

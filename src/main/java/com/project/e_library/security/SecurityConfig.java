@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests( request ->
                         request.requestMatchers("/api/login","/api/register/**","/api/logout",
+                                                "/api/password/reset/**",
                                                 "/api/books","/api/books/search").permitAll().
                                 requestMatchers("/api/user/change-password","/api/user/update").authenticated().
                                 requestMatchers("/**").authenticated()

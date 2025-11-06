@@ -21,7 +21,6 @@ public class RegistrationController {
 
     @PostMapping("/initiate")
     public ResponseEntity<?> initiateRegistration(@Valid @RequestBody RegistrationInitiateRequest dto) {
-        System.out.println(dto);
         registrationService.initiateRegistration(dto);
         return ResponseEntity.ok().build();
     }

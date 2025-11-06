@@ -193,4 +193,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+
+    @ExceptionHandler(PasswordResetNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlePasswordResetNotFoundException(PasswordResetNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "PW_RESET_SESSION_NOT_FOUND",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
 }

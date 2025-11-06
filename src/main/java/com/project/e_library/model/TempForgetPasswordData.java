@@ -1,10 +1,9 @@
 package com.project.e_library.model;
 
-import lombok.*;
+import lombok.Data;
 
 @Data
-public class TempRegistrationData {
+public class TempForgetPasswordData {
     private String email;
-    private String password;
     private String otpCode;
 }
