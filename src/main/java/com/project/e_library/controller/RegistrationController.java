@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/register")
+@RequestMapping("/api/auth/register")
 @RequiredArgsConstructor
 public class RegistrationController {
 

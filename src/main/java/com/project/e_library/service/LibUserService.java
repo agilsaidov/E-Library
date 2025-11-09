@@ -1,6 +1,6 @@
 package com.project.e_library.service;
 
-import com.project.e_library.Id.IdGenerator;
+import com.project.e_library.id.IdGenerator;
 import com.project.e_library.dto.request.ChangePasswordDto;
 import com.project.e_library.dto.request.UserUpdateRequestDto;
 import com.project.e_library.exception.*;

@@ -1,6 +1,6 @@
 package com.project.e_library.service;
 
-import com.project.e_library.Id.IdGenerator;
+import com.project.e_library.id.IdGenerator;
 import com.project.e_library.dto.request.RegistrationInitiateRequest;
 import com.project.e_library.dto.request.RegistrationVerifyRequest;
 import com.project.e_library.exception.DuplicateResourceException;

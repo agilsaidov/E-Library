@@ -66,9 +66,6 @@ public class ForgetPasswordService {
                 request.getEmail() == null ||
                 request.getOtpCode() == null ||
                 request.getNewPassword() == null) {
-            System.out.println(request.getEmail());
-            System.out.println(request.getOtpCode());
-            System.out.println(request.getNewPassword());
             throw new InvalidPayloadException("Request payload is empty or incomplete");
         }
 

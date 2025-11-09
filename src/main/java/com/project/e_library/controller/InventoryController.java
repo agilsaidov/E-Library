@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/inventory")
 @RequiredArgsConstructor
 public class InventoryController {
 
     private final InventoryService inventoryService;
     private final JwtService jwtService;
 
-    @GetMapping("/inventory")
+    @GetMapping
     public ResponseEntity<List<Book>> getUserBooks(@RequestHeader("Authorization") String authHeader) {
 
         String userId = getUserIdFromAuth(authHeader);
@@ -27,7 +27,7 @@ public class InventoryController {
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
-    @PostMapping("/inventory/add")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void addBook(@RequestParam("bookId") Integer bookId,
                         @RequestHeader("Authorization") String authHeader) {
@@ -36,7 +36,7 @@ public class InventoryController {
         inventoryService.addBookToInventory(userId,bookId);
     }
 
-    @DeleteMapping("/inventory/remove")
+    @DeleteMapping("/remove")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeBookById(@RequestParam("bookId") Integer bookId,
                                @RequestHeader("Authorization") String authHeader) {

@@ -30,13 +30,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests( request ->
-                        request.requestMatchers("/api/login","/api/register/**","/api/logout",
+                        request.requestMatchers("/api/auth/login","/api/auth/register/**",
                                                 "/api/password/reset/**",
                                                 "/api/books","/api/books/search").permitAll().
-                                requestMatchers("/api/user/change-password","/api/user/update").authenticated().
                                 requestMatchers("/**").authenticated()
                 )
-                .addFilterBefore( jwtTokenValidatorFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtTokenValidatorFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(request -> {
 
                     CorsConfiguration config = new CorsConfiguration();
@@ -49,6 +48,7 @@ public class SecurityConfig {
                 }));
 
         http.formLogin(AbstractHttpConfigurer::disable);
+        http.logout(AbstractHttpConfigurer::disable);
         http.httpBasic(AbstractHttpConfigurer::disable);
         return http.build();
 
