@@ -1,8 +1,10 @@
 package com.project.e_library.service;
 
+import com.project.e_library.exception.BookNotFoundException;
 import com.project.e_library.exception.InvalidSearchParameterException;
 import com.project.e_library.model.Book;
 import com.project.e_library.repo.BookRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -12,17 +14,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
+
     private final BookRepo bookRepo;
     private static final int PAGE_SIZE = 10;
 
-    public BookService(BookRepo bookRepo) {
-        this.bookRepo = bookRepo;
-    }
-
-
     public List<Book> getRandomBooks(int count) {
         return bookRepo.getRandBooks(count);
+    }
+
+    public Book getBookByBookId(int id) {
+        return bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException("Book with given id not found"));
     }
 
 

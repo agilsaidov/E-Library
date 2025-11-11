@@ -205,4 +205,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+
+    @ExceptionHandler(BookNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleBookNotFoundException(BookNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "BOOK_NOT_FOUND",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
 }
